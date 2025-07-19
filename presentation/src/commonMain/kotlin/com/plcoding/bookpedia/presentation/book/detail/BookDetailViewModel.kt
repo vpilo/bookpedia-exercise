@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlin.time.Duration.Companion.seconds
 
 class BookDetailViewModel : ViewModel() {
@@ -17,4 +18,17 @@ class BookDetailViewModel : ViewModel() {
             SharingStarted.WhileSubscribed(5.seconds),
             _state.value,
         )
+
+    fun onAction(action: BookDetailAction) {
+        when (action) {
+            BookDetailAction.FavoriteClicked -> {
+            }
+
+            is BookDetailAction.SelectedBookChanged -> {
+                _state.update { it.copy(book = action.book) }
+            }
+
+            else -> Unit
+        }
+    }
 }

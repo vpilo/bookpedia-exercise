@@ -10,3 +10,4 @@ val LightBlue = Color(0xFF9AD9FF)
 
 val LightBlueSurface = LightBlue.copy(alpha = .2f)
 val DarkYellowSurface = DarkYellow.copy(alpha = .2f)
+val SandYellowSurface = SandYellow.copy(alpha = .2f)

@@ -29,6 +29,17 @@ sealed interface PreviewParameterProviders {
                 description = "",
             )
         }
+
+        val oneWithImage = listOf(
+            Book(
+                id = "book",
+                title = "The One Book",
+                imageUrl = "file:///home/vale/downloads/holly.jpg",
+                languages = emptyList(),
+                authors = listOf("Author"),
+                description = "",
+            )
+        )
     }
 
     /**

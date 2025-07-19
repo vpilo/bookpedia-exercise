@@ -53,6 +53,10 @@ kotlin {
     }
 }
 
+dependencies {
+    debugImplementation(compose.uiTooling)
+}
+
 android {
     namespace = "com.plcoding.bookpedia.presentation"
     compileSdk = libs.versions.android.compileSdk.get().toInt()

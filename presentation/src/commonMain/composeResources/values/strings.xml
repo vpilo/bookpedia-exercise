@@ -10,7 +10,10 @@
     <string name="search_tab_favs">Favorites</string>
     <string name="search_start_searching">Enter any detail about a book to search.</string>
     <string name="search_no_results">Search for '%1$s' had no results.</string>
+
     <string name="favorites_none">Make some books your favorite!</string>
+    <string name="favorites_add">Make this book a favorite</string>
+    <string name="favorites_remove">Remove this book from favorites</string>
 
     <string name="error_data_source_local_disk_full">Disk full</string>
     <string name="error_data_source_local_unknown">Unknown issue</string>
@@ -20,4 +23,6 @@
     <string name="error_data_source_remote_server">OpenLibrary server error</string>
     <string name="error_data_source_remote_serialization">Unable to convert received data</string>
     <string name="error_data_source_remote_unknown">Unknown server issue</string>
+
+    <string name="back">Go back</string>
 </resources>
