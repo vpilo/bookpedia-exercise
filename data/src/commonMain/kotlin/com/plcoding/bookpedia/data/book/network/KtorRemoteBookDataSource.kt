@@ -1,8 +1,8 @@
-package com.plcoding.bookpedia.book.data.network
+package com.plcoding.bookpedia.data.book.network
 
-import com.plcoding.bookpedia.book.data.dto.SearchResponseDto
-import com.plcoding.bookpedia.book.data.dto.SearchedBookDto
-import com.plcoding.bookpedia.book.data.network.ktx.safeCall
+import com.plcoding.bookpedia.data.dto.SearchResponseDto
+import com.plcoding.bookpedia.data.dto.SearchedBookDto
+import com.plcoding.bookpedia.data.network.ktx.safeCall
 import com.plcoding.bookpedia.model.DataSourceError
 import com.plcoding.bookpedia.model.Result
 import io.ktor.client.HttpClient
@@ -21,7 +21,10 @@ class KtorRemoteBookDataSource(
                 parameter("limit", resultLimit)
                 parameter("language", "eng")
                 @OptIn(ExperimentalSerializationApi::class)
-                parameter("fields", SearchedBookDto.serializer().descriptor.elementNames.joinToString(","))
+                parameter(
+                    "fields",
+                    SearchedBookDto.serializer().descriptor.elementNames.joinToString(",")
+                )
             }
         }
     }

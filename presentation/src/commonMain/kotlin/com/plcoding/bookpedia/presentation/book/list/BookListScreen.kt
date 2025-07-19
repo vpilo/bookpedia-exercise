@@ -57,7 +57,7 @@ fun BookListScreenRoot(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     BookListScreen(
-        state = state.copy(favorites = PreviewParameterProviders.Books.many),
+        state = state,
         onAction = { action ->
             when (action) {
                 is BookListAction.OnBookClicked -> onBookClicked(action.book)
@@ -88,9 +88,6 @@ private fun BookListScreen(
         tabPagerState.animateScrollToPage(state.selectedTab.index)
     }
     LaunchedEffect(tabPagerState.currentPage) {
-        if (tabPagerState.isScrollInProgress) {
-            return@LaunchedEffect
-        }
         onAction(
             BookListAction.OnTabSelected(
                 BookListTab.entries.find { it.index == tabPagerState.currentPage }

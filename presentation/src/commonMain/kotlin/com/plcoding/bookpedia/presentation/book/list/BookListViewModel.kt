@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -70,7 +71,7 @@ class BookListViewModel(
     private fun observeSearchQuery() {
         state.map { it.searchQuery }
             .distinctUntilChanged()
-            .sample(300.milliseconds)
+            .debounce(300.milliseconds)
             .onEach { query ->
                 when {
                     query.isBlank() -> _state.update { it.copy(errorMessage = null, searchResults = emptyList(), isLoading = false) }

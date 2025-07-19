@@ -1,4 +1,4 @@
-package com.plcoding.bookpedia.book.data.dto
+package com.plcoding.bookpedia.data.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -11,7 +11,7 @@ data class SearchedBookDto(
     @SerialName("cover_i") val coverAlternativeKey: Int? = null,
     @SerialName("author_key") val authorKeys: List<String> = emptyList(),
     @SerialName("author_name") val authorNames: List<String> = emptyList(),
-    @SerialName("cover_edition_key") val coverKey: Int? = null,
+    @SerialName("cover_edition_key") val coverKey: String? = null,
     @SerialName("first_publish_year") val publishYear: Int? = null,
     @SerialName("ratings_average") val ratingAverage: Double? = null,
     @SerialName("ratings_count") val ratingCount: Int? = null,

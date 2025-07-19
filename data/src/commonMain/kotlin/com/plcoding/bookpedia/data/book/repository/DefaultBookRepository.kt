@@ -1,7 +1,7 @@
-package com.plcoding.bookpedia.book.data.repository
+package com.plcoding.bookpedia.data.book.repository
 
-import com.plcoding.bookpedia.book.data.ktx.toBook
-import com.plcoding.bookpedia.book.data.network.RemoteBookDataSource
+import com.plcoding.bookpedia.data.book.ktx.toBook
+import com.plcoding.bookpedia.data.book.network.RemoteBookDataSource
 import com.plcoding.bookpedia.model.DataSourceError
 import com.plcoding.bookpedia.model.Result
 import com.plcoding.bookpedia.model.book.Book
@@ -10,7 +10,7 @@ import com.plcoding.bookpedia.model.map
 
 class DefaultBookRepository(
     private val remoteBookDataSource: RemoteBookDataSource,
-): BookRepository  {
+): BookRepository {
     override suspend fun search(query: String): Result<List<Book>, DataSourceError.Remote> =
         remoteBookDataSource.search(query = query, resultLimit = null)
             .map { response ->

@@ -1,4 +1,4 @@
-package com.plcoding.bookpedia.book.data.network.ktx
+package com.plcoding.bookpedia.data.network.ktx
 
 import com.plcoding.bookpedia.model.DataSourceError
 import com.plcoding.bookpedia.model.Result

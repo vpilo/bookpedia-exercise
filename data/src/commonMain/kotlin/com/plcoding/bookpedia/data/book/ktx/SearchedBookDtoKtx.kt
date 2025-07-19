@@ -1,6 +1,6 @@
-package com.plcoding.bookpedia.book.data.ktx
+package com.plcoding.bookpedia.data.book.ktx
 
-import com.plcoding.bookpedia.book.data.dto.SearchedBookDto
+import com.plcoding.bookpedia.data.dto.SearchedBookDto
 import com.plcoding.bookpedia.model.book.Book
 
 fun SearchedBookDto.toBook(): Book =

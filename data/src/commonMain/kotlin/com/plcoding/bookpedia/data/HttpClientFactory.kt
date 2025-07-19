@@ -1,4 +1,4 @@
-package com.plcoding.bookpedia.book.data
+package com.plcoding.bookpedia.data
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
