@@ -7,6 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import com.plcoding.bookpedia.core.presentation.UiText
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -22,7 +23,8 @@ fun MessageBox(
     ) {
         Text(
             text = text.asString(),
-            style = MaterialTheme.typography.titleLarge,
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.headlineMedium,
             color = if(isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
         )
     }
@@ -33,5 +35,14 @@ fun MessageBox(
 private fun PreviewErrorBox() {
     MaterialTheme {
         MessageBox(UiText.DynamicString("An error occurred."), isError = true)
+    }
+}
+
+
+@Preview
+@Composable
+private fun PreviewMessageBox() {
+    MaterialTheme {
+        MessageBox(UiText.DynamicString("It's okay."), isError = false)
     }
 }

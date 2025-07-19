@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,19 +24,18 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun BookList(
     books: List<Book>,
     onClick: (Book) -> Unit,
-    emptyListMessage: UiText,
+    whenEmpty: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     scrollState: LazyListState = rememberLazyListState(),
 ) {
     if (books.isEmpty()) {
-        MessageBox(emptyListMessage, isError = false)
+        whenEmpty()
     }
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(DefaultPadding.Medium),
         state = scrollState,
         modifier = modifier
-            .padding(horizontal = DefaultPadding.Small),
     ) {
         items(
             items = books,
@@ -66,9 +66,20 @@ private fun PreviewBookList() {
                     description = "",
                 )
             },
-            emptyListMessage = UiText.DynamicString("Nothing here"),
+            whenEmpty = {},
             onClick = {}
         )
     }
+}
 
+@Preview
+@Composable
+private fun PreviewEmptyBookList() {
+    MaterialTheme {
+        BookList(
+            books = emptyList(),
+            whenEmpty = { Text(text = "Nothing here") },
+            onClick = {}
+        )
+    }
 }

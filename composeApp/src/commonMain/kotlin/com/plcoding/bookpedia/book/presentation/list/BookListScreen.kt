@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cmp_bookpedia.composeapp.generated.resources.Res
+import cmp_bookpedia.composeapp.generated.resources.favorites_none
 import cmp_bookpedia.composeapp.generated.resources.search_no_results
 import cmp_bookpedia.composeapp.generated.resources.search_start_searching
 import cmp_bookpedia.composeapp.generated.resources.search_tab_favs
@@ -56,7 +57,7 @@ fun BookListScreenRoot(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     BookListScreen(
-        state = state,
+        state = state.copy(favorites = PreviewParameterProviders.Books.many),
         onAction = { action ->
             when (action) {
                 is BookListAction.OnBookClicked -> onBookClicked(action.book)
@@ -75,13 +76,26 @@ private fun BookListScreen(
     modifier: Modifier = Modifier,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
-    val tabPagerState = rememberPagerState { 2 }
 
     val searchResultListState = rememberLazyListState()
     val favoriteListState = rememberLazyListState()
-
     LaunchedEffect(state.searchResults) {
         searchResultListState.animateScrollToItem(0)
+    }
+
+    val tabPagerState = rememberPagerState { BookListTab.entries.size }
+    LaunchedEffect(state.selectedTab) {
+        tabPagerState.animateScrollToPage(state.selectedTab.index)
+    }
+    LaunchedEffect(tabPagerState.currentPage) {
+        if (tabPagerState.isScrollInProgress) {
+            return@LaunchedEffect
+        }
+        onAction(
+            BookListAction.OnTabSelected(
+                BookListTab.entries.find { it.index == tabPagerState.currentPage }
+                    ?: BookListTab.Search)
+        )
     }
 
     Column(
@@ -156,27 +170,45 @@ private fun BookListScreen(
                 }
                 HorizontalPager(
                     state = tabPagerState,
+                    modifier = Modifier
+                        .padding(horizontal = DefaultPadding.Small),
                 ) { currentPage ->
                     val items = when (currentPage) {
-                        1 -> state.favorites
+                        BookListTab.Favorites.index -> state.favorites
                         else -> state.searchResults
                     }
                     val listState = when (currentPage) {
-                        1 -> favoriteListState
+                        BookListTab.Favorites.index -> favoriteListState
                         else -> searchResultListState
                     }
                     when {
                         state.isLoading -> LoadingBox()
                         state.errorMessage != null -> MessageBox(text = state.errorMessage, true)
                         else -> {
-                            val messageId =
-                                if (state.searchQuery.isEmpty()) Res.string.search_start_searching else Res.string.search_no_results
+                            val whenEmpty = @Composable {
+                                when (currentPage) {
+                                    BookListTab.Favorites.index ->
+                                        MessageBox(
+                                            UiText.StringResourceId(Res.string.favorites_none),
+                                            isError = false
+                                        )
+
+                                    else ->
+                                        MessageBox(
+                                            UiText.StringResourceId(
+                                                id = if (state.searchQuery.isEmpty())
+                                                    Res.string.search_start_searching
+                                                else
+                                                    Res.string.search_no_results,
+                                                args = arrayOf(state.searchQuery)
+                                            ),
+                                            isError = false
+                                        )
+                                }
+                            }
                             BookList(
                                 books = items,
-                                emptyListMessage = UiText.StringResourceId(
-                                    id = messageId,
-                                    args = arrayOf(state.searchQuery)
-                                ),
+                                whenEmpty = whenEmpty,
                                 onClick = { onAction(BookListAction.OnBookClicked(it)) },
                                 scrollState = listState
                             )
