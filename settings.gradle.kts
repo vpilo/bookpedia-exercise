@@ -28,4 +28,7 @@ dependencyResolutionManagement {
     }
 }
 
-include(":composeApp")
+include(":model")
+include(":data")
+include(":presentation")
+include(":app")
