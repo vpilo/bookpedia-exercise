@@ -4,7 +4,7 @@ import com.plcoding.bookpedia.book.domain.Book
 import com.plcoding.bookpedia.core.presentation.UiText
 
 data class BookListState(
-    val searchQuery: String = "Terry Pratchett",
+    val searchQuery: String = "",
     val searchResults: List<Book> = emptyList(),
     val favorites: List<Book> = emptyList(),
     val isLoading: Boolean = false,
