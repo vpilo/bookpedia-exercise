@@ -48,14 +48,14 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.koin.core)
+
+            implementation(libs.bundles.ktor)
         }
 
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
-        }
-
-        nativeMain.dependencies {
+            implementation(libs.ktor.client.okhttp)
         }
     }
 }

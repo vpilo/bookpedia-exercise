@@ -13,5 +13,6 @@ sealed interface DataSourceError: Error {
 
     enum class Local : DataSourceError {
         DiskFull,
+        Unknown,
     }
 }
