@@ -5,7 +5,7 @@ import com.plcoding.bookpedia.model.book.Book
 
 fun SearchedBookDto.toBook(): Book =
     Book(
-        id = id,
+        id = id.removePrefix("/works/"),
         title = title,
         imageUrl = if (coverKey != null) {
             "https://covers.openlibrary.org/b/olid/${coverKey}-L.jpg"
