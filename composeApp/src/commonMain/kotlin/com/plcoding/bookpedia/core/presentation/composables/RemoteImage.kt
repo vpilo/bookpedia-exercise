@@ -3,6 +3,8 @@ package com.plcoding.bookpedia.core.presentation.composables
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,6 +25,7 @@ fun RemoteImage(
     contentDescription: String?,
     modifier: Modifier = Modifier,
     contentAlignment: Alignment = Alignment.Center,
+
 ) {
     Box(
         modifier = modifier,
@@ -44,10 +47,16 @@ fun RemoteImage(
                 imageLoadResult = Result.failure(it.result.throwable)
             }
         )
-        when (val result = imageLoadResult) {
-            null -> CircularProgressIndicator()
+        val result = imageLoadResult
+        when {
+            result == null -> CircularProgressIndicator()
+            result.isFailure -> Icon(
+                painter = painterResource(Res.drawable.ic_broken_image),
+                contentDescription = contentDescription,
+                tint = MaterialTheme.colorScheme.error.copy(alpha = .5f),
+            )
             else -> Image(
-                painter = if (result.isSuccess) painter else painterResource(Res.drawable.ic_broken_image),
+                painter = painter,
                 contentDescription = contentDescription,
                 contentScale = ContentScale.Fit,
             )
