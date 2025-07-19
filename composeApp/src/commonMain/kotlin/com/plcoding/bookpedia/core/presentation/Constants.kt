@@ -17,5 +17,6 @@ val DefaultButtonSize: Dp = 40.dp
 
 val DefaultThumbnailSize: Dp = 96.dp
 
+val RoundedShapeCornerSize = 32.dp
 val RoundedShape: Shape
-    get() = RoundedCornerShape(32.dp)
+    get() = RoundedCornerShape(RoundedShapeCornerSize)

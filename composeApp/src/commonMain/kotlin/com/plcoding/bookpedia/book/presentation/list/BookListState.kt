@@ -8,6 +8,11 @@ data class BookListState(
     val searchResults: List<Book> = emptyList(),
     val favorites: List<Book> = emptyList(),
     val isLoading: Boolean = false,
-    val selectedTabIndex: Int = 0,
+    val selectedTab: BookListTab = BookListTab.Search,
     val errorMessage: UiText? = null,
 )
+
+enum class BookListTab(val index: Int) {
+    Search(0),
+    Favorites(1),
+}

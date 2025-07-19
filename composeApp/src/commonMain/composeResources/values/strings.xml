@@ -5,4 +5,10 @@
 
     <string name="rating">Rating</string>
     <string name="book_open">See book</string>
+
+    <string name="search_tab_results">Search results</string>
+    <string name="search_tab_favs">Favorites</string>
+    <string name="search_start_searching">Enter any detail about a book to search.</string>
+    <string name="search_no_results">Search for '%1$s' had no results.</string>
+    <string name="favorites_none">Make some books your favorite!</string>
 </resources>

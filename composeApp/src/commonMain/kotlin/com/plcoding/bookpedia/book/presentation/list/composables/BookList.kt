@@ -12,22 +12,30 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import cmp_bookpedia.composeapp.generated.resources.Res
 import com.plcoding.bookpedia.book.domain.Book
 import com.plcoding.bookpedia.core.presentation.DefaultPadding
+import com.plcoding.bookpedia.core.presentation.UiText
+import com.plcoding.bookpedia.core.presentation.composables.MessageBox
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun BookList(
     books: List<Book>,
     onClick: (Book) -> Unit,
+    emptyListMessage: UiText,
     modifier: Modifier = Modifier,
     scrollState: LazyListState = rememberLazyListState(),
 ) {
+    if (books.isEmpty()) {
+        MessageBox(emptyListMessage, isError = false)
+    }
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(DefaultPadding.Small),
+        verticalArrangement = Arrangement.spacedBy(DefaultPadding.Medium),
         state = scrollState,
-        modifier = modifier,
+        modifier = modifier
+            .padding(horizontal = DefaultPadding.Small),
     ) {
         items(
             items = books,
@@ -36,8 +44,7 @@ fun BookList(
             BookListItem(
                 book = book,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(DefaultPadding.Medium),
+                    .fillMaxWidth(),
                 onClick = { onClick(book) },
             )
         }
@@ -59,6 +66,7 @@ private fun PreviewBookList() {
                     description = "",
                 )
             },
+            emptyListMessage = UiText.DynamicString("Nothing here"),
             onClick = {}
         )
     }

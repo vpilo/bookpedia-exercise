@@ -3,21 +3,23 @@ package com.plcoding.bookpedia.book.presentation
 import com.plcoding.bookpedia.book.domain.Book
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 
-class BookPreviewParameterProvider : PreviewParameterProvider<List<Book>> {
-    override val count: Int = 1
-    override val values: Sequence<List<Book>> = sequenceOf(
-        emptyList(),
-        listOf(
-            Book(
-                id = "book",
-                title = "The One Book",
-                imageUrl = "",
-                languages = emptyList(),
-                authors = listOf("Author"),
-                description = "",
+sealed interface PreviewParameterProviders {
+
+    data object Books : PreviewParameterProviders {
+        val none = emptyList<Book>()
+
+        val one = listOf(
+                Book(
+                    id = "book",
+                    title = "The One Book",
+                    imageUrl = "",
+                    languages = emptyList(),
+                    authors = listOf("Author"),
+                    description = "",
+                )
             )
-        ),
-        (1..32).map { idx ->
+
+        val many = (1..64).map { idx ->
             Book(
                 id = idx.toString(),
                 title = "Book $idx",
@@ -27,5 +29,19 @@ class BookPreviewParameterProvider : PreviewParameterProvider<List<Book>> {
                 description = "",
             )
         }
-    )
+    }
+
+    /**
+     * In theory add
+     *     @PreviewParameter(BookPreviewParameterProvider::class, limit = 2) books: List<Book>
+     * as parameter for a Preview. But `books` is unexpectedly null.
+     */
+    object BooksPPPNotWorking : PreviewParameterProvider<List<Book>>, PreviewParameterProviders {
+        override val values: Sequence<List<Book>> = sequenceOf(
+            Books.none,
+            Books.one,
+            Books.many
+        )
+    }
+
 }
