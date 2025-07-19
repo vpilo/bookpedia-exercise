@@ -15,11 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.plcoding.bookpedia.book.domain.Book
+import com.plcoding.bookpedia.book.presentation.BookPreviewParameterProvider
+import com.plcoding.bookpedia.book.presentation.list.composables.BookList
 import com.plcoding.bookpedia.core.presentation.composables.SearchBar
 import com.plcoding.bookpedia.core.presentation.DarkBlue
 import com.plcoding.bookpedia.core.presentation.DefaultPadding
 import com.plcoding.bookpedia.core.presentation.MaxUserInterfaceWidth
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -49,6 +52,7 @@ private fun BookListScreen(
 ) {
     Column(
         modifier = Modifier
+            .widthIn(max = MaxUserInterfaceWidth)
             .fillMaxSize()
             .background(DarkBlue)
             .statusBarsPadding(),
@@ -66,18 +70,23 @@ private fun BookListScreen(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .widthIn(max = MaxUserInterfaceWidth)
-                .padding(DefaultPadding)
+                .padding(DefaultPadding.Medium)
+        )
+        BookList(
+            books = state.searchResults,
+            onClick = { onAction(BookListAction.OnBookClicked(it)) }
         )
     }
 }
 
 @Preview
 @Composable
-private fun PreviewBookListScreen() {
+private fun PreviewBookListScreen(
+    @PreviewParameter(BookPreviewParameterProvider::class) books: List<Book>
+) {
     MaterialTheme {
         BookListScreen(
-            state = BookListState(),
+            state = BookListState(searchResults = books),
             onAction = {},
         )
     }
