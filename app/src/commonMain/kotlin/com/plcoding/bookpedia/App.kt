@@ -7,7 +7,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -23,6 +22,7 @@ import com.plcoding.bookpedia.presentation.book.detail.BookDetailViewModel
 import com.plcoding.bookpedia.presentation.book.list.BookListScreenRoot
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 @Preview
@@ -54,7 +54,6 @@ fun App() {
                     val viewModel = koinViewModel<BookDetailViewModel>()
                     val selectedBookViewModel = entry.sharedViewModel<SelectedBookViewModel>(navController)
                     val selectedBook by selectedBookViewModel.book.collectAsStateWithLifecycle()
-                    val args = entry.toRoute<Route.BookDetail>()
 
                     LaunchedEffect(selectedBook) {
                         selectedBook?.let {

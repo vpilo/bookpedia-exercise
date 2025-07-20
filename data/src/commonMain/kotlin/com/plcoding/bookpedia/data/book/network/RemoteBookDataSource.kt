@@ -1,9 +1,13 @@
 package com.plcoding.bookpedia.data.book.network
 
+import com.plcoding.bookpedia.data.dto.BookDetailDto
 import com.plcoding.bookpedia.data.dto.SearchResponseDto
 import com.plcoding.bookpedia.model.DataSourceError
 import com.plcoding.bookpedia.model.Result
 
 interface RemoteBookDataSource {
+
     suspend fun search(query: String, resultLimit: Int? = null): Result<SearchResponseDto, DataSourceError.Remote>
+
+    suspend fun getDescription(id: String): Result<BookDetailDto, DataSourceError.Remote>
 }

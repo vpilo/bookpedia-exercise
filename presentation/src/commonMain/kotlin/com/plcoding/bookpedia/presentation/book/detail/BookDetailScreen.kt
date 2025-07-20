@@ -28,6 +28,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -167,7 +168,7 @@ private fun BookDetailScreen(
                 maxLines = 1,
             )
             Text(
-                text = book.description.ifEmpty { stringResource(Res.string.book_no_synopsis) },
+                text = (book.description ?: "").ifEmpty { stringResource(Res.string.book_no_synopsis) },
                 textAlign = TextAlign.Justify,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(horizontal = DefaultPadding.Medium),

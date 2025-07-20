@@ -6,4 +6,5 @@ import com.plcoding.bookpedia.model.book.Book
 
 interface BookRepository {
     suspend fun search(query: String): Result<List<Book>, DataSourceError.Remote>
+    suspend fun getDescription(id: String): Result<String?, DataSourceError>
 }

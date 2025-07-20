@@ -32,7 +32,7 @@ sealed interface PreviewParameterProviders {
 
         val oneWithImage = listOf(
             Book(
-                id = "book",
+                id = "one_book_1111",
                 title = "The One Book",
                 imageUrl = "file:///home/vale/downloads/holly.jpg",
                 languages = listOf("ITA", "ENG", "NED"),
