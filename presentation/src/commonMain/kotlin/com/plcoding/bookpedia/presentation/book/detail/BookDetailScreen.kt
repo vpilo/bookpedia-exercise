@@ -21,15 +21,15 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -95,7 +95,8 @@ private fun BookDetailScreen(
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
     ) {
-        if (state.isLoading || state.book == null) {
+        val isLoading = remember(state) { state.isLoading || state.book == null }
+        if (isLoading) {
             BookDetailScreenBackButton(onAction = onAction)
             LoadingBox()
             return@Surface
@@ -104,10 +105,12 @@ private fun BookDetailScreen(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            BookDetailScreenHeader(state, onAction, modifier)
+            val book = checkNotNull(state.book) { "This Composable can only be called with a valid book instance." }
+
+            BookDetailScreenHeader(book.imageUrl, book.isFavorite, onAction, modifier)
+
             Spacer(modifier = Modifier.height(DefaultPadding.Small))
 
-            val book = checkNotNull(state.book) { "This Composable can only be called with a valid book instance." }
             Text(
                 text = book.title,
                 style = MaterialTheme.typography.headlineLarge,
@@ -205,14 +208,13 @@ private fun BookDetailScreenBackButton(
 
 @Composable
 private fun BookDetailScreenHeader(
-    state: BookDetailState,
+    imageUrl: String,
+    isFavorite: Boolean,
     onAction: (BookDetailAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val book = checkNotNull(state.book) { "This Composable can only be called with a valid book instance." }
-
     BlurredImageBackground(
-        imageUrl = book.imageUrl,
+        imageUrl = imageUrl,
         modifier = modifier,
     ) {
         Column(
@@ -225,7 +227,7 @@ private fun BookDetailScreenHeader(
             Box {
                 val borderClip = RoundedCornerShape(RoundedShapeCornerSizeSmall)
                 RemoteImage(
-                    imageUrl = book.imageUrl,
+                    imageUrl = imageUrl,
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth(fraction = .4f)
@@ -233,6 +235,7 @@ private fun BookDetailScreenHeader(
                         .clip(borderClip)
                         .align(Alignment.TopCenter),
                 )
+                println("Current state of favorite: $isFavorite")
                 IconButton(
                     onClick = { onAction(BookDetailAction.FavoriteClicked) },
                     modifier = Modifier
@@ -242,10 +245,10 @@ private fun BookDetailScreenHeader(
                         .shadow(20.dp),
                 ) {
                     Icon(
-                        imageVector = if (state.isFavorite) Icons.Filled.Favorite else Icons.Outlined.Favorite,
+                        imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
                         tint = Color.Red,
                         contentDescription = stringResource(
-                            if (state.isFavorite) Res.string.favorites_remove else Res.string.favorites_add,
+                            if (isFavorite) Res.string.favorites_remove else Res.string.favorites_add,
                         ),
                     )
                 }

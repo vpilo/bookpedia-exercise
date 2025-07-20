@@ -15,6 +15,12 @@ kotlin {
     }
 
     jvm("desktop")
+
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.kotlinx.coroutines)
+        }
+    }
 }
 
 android {

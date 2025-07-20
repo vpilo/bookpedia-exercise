@@ -3,6 +3,7 @@ package com.plcoding.bookpedia.presentation.book.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.plcoding.bookpedia.model.book.Book
 import com.plcoding.bookpedia.model.book.repository.BookRepository
 import com.plcoding.bookpedia.model.onError
 import com.plcoding.bookpedia.model.onSuccess
@@ -25,7 +26,16 @@ class BookDetailViewModel(
     private val _state = MutableStateFlow(BookDetailState())
     val state = _state
         .onStart {
-            fetchDescription()
+            checkNotNull(bookId) { "Detail view model doesn't know which book to show" }
+            bookRepository.get(bookId)
+                .onError {
+                    println("BOOK $bookId NOT FOUND")
+                    _state.update { BookDetailState() }
+                }
+                .onSuccess { foundBook ->
+                    println("BOOK $bookId LOADED")
+                    _state.update { it.copy(book = foundBook, isLoading = false) }
+                }
         }
         .stateIn(
             viewModelScope,
@@ -36,34 +46,20 @@ class BookDetailViewModel(
     fun onAction(action: BookDetailAction) {
         when (action) {
             BookDetailAction.FavoriteClicked -> {
-            }
-
-            is BookDetailAction.SelectedBookChanged -> {
-                _state.update { it.copy(book = action.book) }
+                viewModelScope.launch {
+                    val id = bookId ?: return@launch
+                    val book = _state.value.book ?: return@launch
+                    bookRepository.setFavorite(id, !book.isFavorite)
+                        .onSuccess { newState ->
+                            _state.update {
+                                println("BOOK $bookId NEW FAVORITE STATE $newState")
+                                it.copy(book = book.copy(isFavorite = newState))
+                            }
+                        }
+                }
             }
 
             else -> Unit
-        }
-    }
-
-    private fun fetchDescription() {
-        bookId ?: return
-
-        viewModelScope.launch {
-            val book = state.value.book ?: return@launch
-            _state.update { it.copy(isLoading = true) }
-
-            bookRepository.getDescription(bookId)
-                .onError {
-                    val newBook = book.copy(description = null)
-                    _state.update { it.copy(isLoading = false, book = newBook) }
-                }
-                .onSuccess { description ->
-                    _state.update {
-                        val newBook = book.copy(description = description)
-                        it.copy(isLoading = false, book = newBook)
-                    }
-                }
         }
     }
 }

@@ -59,6 +59,14 @@ kotlin {
             implementation(libs.ktor.client.okhttp)
         }
     }
+
+    targets.configureEach {
+        compilations.configureEach {
+            compileTaskProvider.get().compilerOptions {
+                freeCompilerArgs.add("-Xexpect-actual-classes")
+            }
+        }
+    }
 }
 
 android {

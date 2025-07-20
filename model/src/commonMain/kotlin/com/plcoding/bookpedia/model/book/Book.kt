@@ -12,4 +12,5 @@ data class Book(
     val ratingCount: Int? = null,
     val numPages: Int? = null,
     val numEditions: Int? = null,
+    val isFavorite: Boolean = false,
 )

@@ -13,11 +13,12 @@ fun SearchedBookDto.toBook(): Book =
             "https://covers.openlibrary.org/b/id/${coverAlternativeKey}-L.jpg"
         },
         authors = authorNames,
-        description = "<MISSING>",
+        description = null,
         languages = languages,
         firstPublishYear = publishYear,
         averageRating = ratingAverage,
         ratingCount = ratingCount,
         numPages = numPagesMedian,
         numEditions = numEditions,
+        isFavorite = false,
     )
