@@ -63,7 +63,7 @@ import com.plcoding.bookpedia.presentation.composables.RemoteImage
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-private val buttonBackgroundBrush = Brush.radialGradient(listOf(SandYellow, Color.Transparent), radius = 50f)
+private val buttonBackgroundBrush = Brush.radialGradient(listOf(SandYellow, Color.Transparent), radius = 15f)
 
 @Composable
 fun BookDetailScreenRoot(
@@ -230,12 +230,10 @@ private fun BookDetailScreenHeader(
                     imageUrl = imageUrl,
                     contentDescription = null,
                     modifier = Modifier
-                        .fillMaxWidth(fraction = .4f)
                         .border(2.dp, color = DarkBlue, shape = borderClip)
                         .clip(borderClip)
                         .align(Alignment.TopCenter),
                 )
-                println("Current state of favorite: $isFavorite")
                 IconButton(
                     onClick = { onAction(BookDetailAction.FavoriteClicked) },
                     modifier = Modifier

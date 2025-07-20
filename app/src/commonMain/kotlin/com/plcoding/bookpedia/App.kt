@@ -1,5 +1,7 @@
 package com.plcoding.bookpedia
 
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -22,7 +24,10 @@ fun App() {
             startDestination = Route.RootNavGraph,
         ) {
             navigation<Route.RootNavGraph>(startDestination = Route.BookList) {
-                composable<Route.BookList> {
+                composable<Route.BookList>(
+                    exitTransition = { slideOutHorizontally() },
+                    popEnterTransition = { slideInHorizontally() },
+                ) {
                     BookListScreenRoot(
                         viewModel = koinViewModel(),
                         onBookClicked = { book ->
@@ -31,7 +36,10 @@ fun App() {
                     )
                 }
 
-                composable<Route.BookDetail> {
+                composable<Route.BookDetail>(
+                    enterTransition = { slideInHorizontally { offset -> offset } },
+                    popExitTransition = { slideOutHorizontally { offset -> offset } },
+                ) {
                     BookDetailScreenRoot(
                         onBackClicked = { navController.navigateUp() },
                         viewModel = koinViewModel(),

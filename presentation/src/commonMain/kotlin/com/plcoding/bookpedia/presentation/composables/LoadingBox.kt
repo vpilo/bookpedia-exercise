@@ -7,6 +7,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.plcoding.bookpedia.presentation.PulseAnimation
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -16,7 +17,7 @@ fun LoadingBox(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxSize(),
     ) {
-        CircularProgressIndicator()
+        PulseAnimation()
     }
 }
 

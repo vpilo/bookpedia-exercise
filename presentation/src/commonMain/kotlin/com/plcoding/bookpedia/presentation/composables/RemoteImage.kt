@@ -16,6 +16,7 @@ import androidx.compose.ui.layout.ContentScale
 import cmp_bookpedia.presentation.generated.resources.Res
 import cmp_bookpedia.presentation.generated.resources.ic_broken_image
 import coil3.compose.rememberAsyncImagePainter
+import com.plcoding.bookpedia.presentation.PulseAnimation
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
@@ -45,7 +46,7 @@ fun RemoteImage(
     )
     val result = imageLoadResult
     when {
-        result == null -> CircularProgressIndicator()
+        result == null -> PulseAnimation()
         result.isFailure -> Icon(
             painter = painterResource(Res.drawable.ic_broken_image),
             contentDescription = contentDescription,
