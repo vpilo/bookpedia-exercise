@@ -1,7 +1,6 @@
 package com.plcoding.bookpedia.presentation.composables
 
 import androidx.compose.foundation.Image
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable

@@ -3,7 +3,6 @@ package com.plcoding.bookpedia.presentation.book.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.plcoding.bookpedia.model.book.Book
 import com.plcoding.bookpedia.model.book.repository.BookRepository
 import com.plcoding.bookpedia.model.onError
 import com.plcoding.bookpedia.model.onSuccess
