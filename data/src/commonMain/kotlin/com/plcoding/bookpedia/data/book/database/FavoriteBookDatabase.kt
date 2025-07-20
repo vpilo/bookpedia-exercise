@@ -1,5 +1,6 @@
 package com.plcoding.bookpedia.data.book.database
 
+import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
@@ -9,6 +10,7 @@ import androidx.room.TypeConverters
     entities = [BookEntity::class],
     version = 1,
 )
+@ConstructedBy(BookDatabaseConstructor::class)
 @TypeConverters(
     StringListTypeConverter::class
 )
