@@ -57,7 +57,7 @@ fun BookListScreenRoot(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     BookListScreen(
-        state = state.copy(favorites = PreviewParameterProviders.Books.one),
+        state = state.copy(favorites = PreviewParameterProviders.Books.oneWithImage),
         onAction = { action ->
             when (action) {
                 is BookListAction.OnBookClicked -> onBookClicked(action.book)

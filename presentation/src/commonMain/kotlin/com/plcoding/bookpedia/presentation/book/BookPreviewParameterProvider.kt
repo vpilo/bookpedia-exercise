@@ -9,15 +9,15 @@ sealed interface PreviewParameterProviders {
         val none = emptyList<Book>()
 
         val one = listOf(
-                Book(
-                    id = "book",
-                    title = "The One Book",
-                    imageUrl = "",
-                    languages = emptyList(),
-                    authors = listOf("Author"),
-                    description = "",
-                )
-            )
+            Book(
+                id = "book",
+                title = "The One Book",
+                imageUrl = "",
+                languages = emptyList(),
+                authors = listOf("Author"),
+                description = "",
+            ),
+        )
 
         val many = (1..64).map { idx ->
             Book(
@@ -35,10 +35,25 @@ sealed interface PreviewParameterProviders {
                 id = "book",
                 title = "The One Book",
                 imageUrl = "file:///home/vale/downloads/holly.jpg",
-                languages = emptyList(),
+                languages = listOf("ITA", "ENG", "NED"),
                 authors = listOf("Author"),
-                description = "",
-            )
+                description =
+                    "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. " +
+                            "In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus " +
+                            "fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut " +
+                            "hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos." +
+                            "\n" +
+                            "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem " +
+                            "placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. " +
+                            "Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer " +
+                            "nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra " +
+                            "inceptos himenaeos.",
+                averageRating = 3.8,
+                ratingCount = 276,
+                numPages = 750,
+                firstPublishYear = 2020,
+                numEditions = 3,
+            ),
         )
     }
 
@@ -51,7 +66,7 @@ sealed interface PreviewParameterProviders {
         override val values: Sequence<List<Book>> = sequenceOf(
             Books.none,
             Books.one,
-            Books.many
+            Books.many,
         )
     }
 

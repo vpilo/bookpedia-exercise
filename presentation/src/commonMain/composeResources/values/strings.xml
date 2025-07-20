@@ -4,7 +4,11 @@
     <string name="search_clear">Clear search query</string>
 
     <string name="rating">Rating</string>
+    <string name="num_pages">Pages</string>
+    <string name="languages">Languages</string>
     <string name="book_open">See book</string>
+    <string name="book_synopsis">Synopsis</string>
+    <string name="book_no_synopsis">Synopsis is not available for this book.</string>
 
     <string name="search_tab_results">Search results</string>
     <string name="search_tab_favs">Favorites</string>
